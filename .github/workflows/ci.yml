@@ -69,7 +69,7 @@ jobs:
       if: always() # Ensures the report uploads even if the scan step failed the build
       with:
         name: sca-scan-results
-        path: "./grype_scan_output.csv"
+        path: "./grype_scan_output"
 
 
 
