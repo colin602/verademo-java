@@ -53,7 +53,7 @@ jobs:
         fail-build: true
         
     - name: Upload Anchore Scan Report to GitHub Security Tab
-      uses: github/code-scanning-graphql-action/upload-sarif@v3
+      uses: github/codeql-action/upload-sarif@v4
       if: always() # Ensures the report uploads even if the scan step failed the build
       with:
         sarif_file: ${{ steps.scan.outputs.sarif }}
