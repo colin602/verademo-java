@@ -58,7 +58,7 @@ jobs:
       id: scan
       uses: anchore/scan-action@v7
       with:
-        path: "."
+        sbom: "${{ github.event.repository.name }}-sbom.spdx.json"
         fail-build: true
         severity-cutoff: high
         
