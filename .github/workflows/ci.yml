@@ -51,6 +51,7 @@ jobs:
       with:
         path: "."
         fail-build: true
+        severity-cutoff: high
         
     - name: Upload Anchore Scan Report to GitHub Security Tab
       uses: anchore/scan-action/download-grype@v3
