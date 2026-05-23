@@ -32,7 +32,6 @@ jobs:
       run: mvn -B package --file app/pom.xml
     
   sca:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -47,11 +46,17 @@ jobs:
 
 
     - name: Scan SBOM
+      id: scan
       uses: anchore/scan-action@v7
       with:
         path: "."
         fail-build: true
-        severity-cutoff: critical
+        
+    - name: Upload Anchore Scan Report to GitHub Security Tab
+      uses: github/code-scanning-graphql-action/upload-sarif@v3
+      if: always() # Ensures the report uploads even if the scan step failed the build
+      with:
+        sarif_file: ${{ steps.scan.outputs.sarif }}
 
 
 
