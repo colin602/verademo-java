@@ -45,14 +45,14 @@ jobs:
         output-file: "${{ github.event.repository.name }}-sbom.spdx.json"
 
     - name: Download Grype
-      uses: anchore/scan-action/download-grype@v3
-      if: always() # Ensures grype is available even if the scan step failed the build
+      run: |
+        curl -sSfL https://get.anchore.io/grype | sudo sh -s -- -b /usr/local/bin
+        grype --version
       id: grype
-      with:
-        grype-version: 0.112.0
+      
 
     - name: Run Grype scan to CSV
-      run: ${{ steps.grype.outputs.cmd }} dir:. > grype_scan_output.csv
+      run: grype dir:. > grype_scan_output
 
     - name: Scan SBOM
       id: scan
