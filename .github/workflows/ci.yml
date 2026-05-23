@@ -52,7 +52,7 @@ jobs:
       
 
     - name: Run Grype scan to CSV
-      run: grype dir:. > grype_scan_output
+      run: grype sbom:"${{ github.event.repository.name }}-sbom.spdx.json" > grype_scan_output
 
     - name: Scan SBOM
       id: scan
