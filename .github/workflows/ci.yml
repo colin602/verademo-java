@@ -64,7 +64,7 @@ jobs:
 
       with:
         name: sca-scan-results
-        path: "grype_scan_output.txt"
+        path: "./grype_scan_output.txt"
 
 
 
