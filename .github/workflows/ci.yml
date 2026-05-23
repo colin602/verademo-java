@@ -48,6 +48,8 @@ jobs:
       uses: anchore/scan-action/download-grype@v3
       if: always() # Ensures grype is available even if the scan step failed the build
       id: grype
+      with:
+        grype-version: 0.112.0
 
     - name: Run Grype scan to CSV
       run: ${{ steps.grype.outputs.cmd }} dir:. > grype_scan_output.csv
