@@ -57,7 +57,7 @@ jobs:
       uses: anchore/scan-action/download-grype@v3
       if: always() # Ensures the report uploads even if the scan step failed the build
       id: grype
-    - run: echo $(${{steps.grype.outputs.cmd}} dir:.) >> grype_scan_output.txt
+    - run: ${{steps.grype.outputs.cmd}} dir:. | echo >> grype_scan_output.txt
     
     - name: Upload sca results
       uses: actions/upload-artifact@v7
