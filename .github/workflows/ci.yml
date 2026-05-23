@@ -44,6 +44,13 @@ jobs:
         format: spdx-json
         output-file: "${{ github.event.repository.name }}-sbom.spdx.json"
 
+    - name: Download Grype
+      uses: anchore/scan-action/download-grype@v3
+      if: always() # Ensures grype is available even if the scan step failed the build
+      id: grype
+
+    - name: Run Grype scan to CSV
+      run: ${{ steps.grype.outputs.cmd }} dir:. > grype_scan_output.csv
 
     - name: Scan SBOM
       id: scan
@@ -53,16 +60,11 @@ jobs:
         fail-build: true
         severity-cutoff: high
         
-    - name: Upload Anchore Scan Report to GitHub Security Tab
-      uses: anchore/scan-action/download-grype@v3
-      if: always() # Ensures the report uploads even if the scan step failed the build
-      id: grype
-    - run: ${{steps.grype.outputs.cmd}} dir:. > grype_scan_output.csv
+
     
     - name: Upload sca results
-      uses: actions/upload-artifact@v7
+      uses: actions/upload-artifact@v4
       if: always() # Ensures the report uploads even if the scan step failed the build
-
       with:
         name: sca-scan-results
         path: "./grype_scan_output.csv"
